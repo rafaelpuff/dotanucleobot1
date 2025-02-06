@@ -40,3 +40,6 @@ app.env
 *.swo
 .DS_Store
 Thumbs.db
+
+# Project specific
+config/config.json
