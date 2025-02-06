@@ -1,0 +1,78 @@
+# Dota 2 Nucleo Bot
+
+Bot do Discord para gerenciamento de jogadores do Dota 2 Nucleo.
+
+## Requisitos
+
+- Python 3.12.9
+- MySQL Server
+- Pacotes Python (instale usando pip):
+  ```
+  discord.py
+  sqlalchemy
+  mysql-connector-python
+  ```
+
+## Configuração
+
+1. Crie um arquivo `app.env` na raiz do projeto com as seguintes informações:
+```env
+DISCORD_TOKEN=seu_token_do_bot
+DISCORD_PREFIX=!
+DB_HOST=seu_host_mysql
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_DATABASE=nome_do_banco
+```
+
+2. Ative os seguintes intents no [Portal do Desenvolvedor do Discord](https://discord.com/developers/applications/):
+   - MESSAGE CONTENT INTENT
+   - SERVER MEMBERS INTENT
+
+## Comandos
+
+- `!registrar <role> [nick]`: Registra um jogador
+  - role: número de 1 a 5, representando:
+    - 1: HC (Hard Carry)
+    - 2: MID
+    - 3: OFF (Offlane)
+    - 4: SUP4 (Soft Support)
+    - 5: SUP5 (Hard Support)
+  - nick: nickname personalizado (opcional)
+  - Se não informar o nick, usa o nome do Discord
+  - Exemplo: `!registrar 1` ou `!registrar 1 MeuNick`
+
+- `!info [@usuário]`: Mostra informações do jogador
+  - @usuário: menção ao usuário (opcional)
+  - Se não mencionar ninguém, mostra suas próprias informações
+  - Mostra o avatar do Discord do jogador
+  - Exemplo: `!info` ou `!info @Usuario`
+
+## Informações Armazenadas
+
+Para cada jogador:
+- Discord ID
+- Nome (nickname personalizado ou nome do Discord)
+- Role (HC, MID, OFF, SUP4, SUP5)
+- MMR (começa em 500)
+- Vitórias
+- Derrotas
+- Abandonos
+
+## Desenvolvimento
+
+O bot utiliza:
+- discord.py para interface com o Discord
+- SQLAlchemy como ORM
+- MySQL como banco de dados
+
+A estrutura do projeto é:
+```
+dota2_nucleo/
+├── bot.py              # Arquivo principal do bot
+├── app.env            # Configurações
+├── src/
+│   ├── repository/     # Camada de dados
+│   ├── service/        # Lógica de negócios
+│   └── utils/          # Utilitários
+└── README              # Este arquivo
